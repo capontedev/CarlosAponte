@@ -1,0 +1,123 @@
+<div class="table">
+  <div class="actions">
+    <input class="search" type="text" placeholder="Search..." (input)="searchText($event)">
+    <button type="button" routerLink="/product">Agregar</button>
+  </div>
+
+  <div class="table-body">
+    <table>
+      <thead>
+        <tr>
+          <th>Logo</th>
+          <th>Nombre del producto</th>
+          <th><div><span>Descripción</span><img src="./assets/info.png" alt="info"></div></th>
+          <th><div><span>Fecha de liberación</span><img src="./assets/info.png" alt="info"></div></th>
+          <th><div><span>Fecha de reestructuración</span><img src="./assets/info.png" alt="info"></div></th>
+          <th></th>          
+        </tr>
+      </thead>
+      <tbody>
+        @if(loading) {
+          @for (item of skeleton; track item) {
+            <tr>
+              <td class="loading"><div class="bar"></div></td>
+              <td class="loading"><div class="bar"></div></td>
+              <td class="loading"><div class="bar"></div></td>
+              <td class="loading"><div class="bar"></div></td>
+              <td class="loading"><div class="bar"></div></td>
+              <td class="loading"><div class="bar"></div></td>
+            </tr>
+          }
+        } @else if (data.length) {
+          @for (item of data; track item) {
+            <tr>
+              <td class="logo"><img #iconRef [src]="item.logo" alt="logo" (error)="iconRef.src = './assets/no-logo.png'"></td>
+              <td>{{item.name}}</td>
+              <td>{{item.description}}</td>
+              <td>{{item.date_release | date: "dd/MM/yyyy" }}</td>
+              <td>{{item.date_revision | date: "dd/MM/yyyy" }}</td>
+              <td class="actions-item">
+                <div class="dropdown">
+                  <img src="./assets/menu-actions.png" alt="actions">
+                  <div class="dropdown-content">
+                    <div routerLink="/product/{{item.id}}">Actualizar</div>
+                    <div 
+                      (click)="modal.open()"
+                      (keydown.enter)="modal.open()" 
+                      tabindex="0">Eliminar</div>
+                  </div>
+                </div>
+
+                <app-modal 
+                  #modal 
+                  [name]="item.name ?? ''"
+                  (confirm)="deleteProduct(item.id)">
+                </app-modal>
+              </td>
+            </tr>
+          }
+        } @else {
+          <div class="empty"><span>Sin Resultados</span></div>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <span>
+      {{totalResults}} Resultados
+    </span>
+
+    @if (pagination.length > 1) {
+      <span class="pagination">
+        <span 
+          class="first" 
+          (click)="gotoPage(1)"
+          (keydown.enter)="gotoPage(1)" 
+          tabindex="0">
+          &#60;
+          &#60;
+        </span>
+        <span class="prior" 
+          (click)="gotoPage(lastPage-1)"
+          (keydown.enter)="gotoPage(lastPage-1)" 
+          tabindex="0">
+          &#60;
+        </span>
+        @for (page of pagination; track page) {
+          <span 
+            class="page hide-pages" 
+            [class.page-selected] = "lastPage === page"
+            (click)="gotoPage(page)"
+            (keydown.enter)="gotoPage(page)" 
+            tabindex="0">
+            {{page}}
+          </span>
+        }
+        <span 
+          class="next" 
+          (click)="gotoPage(lastPage+1)"
+          (keydown.enter)="gotoPage(lastPage+1)" 
+          tabindex="0">
+          &#62;
+        </span>
+        <span 
+          class="last" 
+          (click)="gotoPage(pagination[pagination.length-1])"
+          (keydown.enter)="gotoPage(pagination[pagination.length-1])" 
+          tabindex="0">
+          &#62;
+          &#62;
+        </span>
+      </span>
+    }
+
+    <span class="select" (change)="selectedPageSize($event)">
+      <select>
+        @for (size of pageSize; track pageSize) {
+          <option [value]="size">{{size}}</option>
+        }
+      </select>
+    </span>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+.form {
+  background-color: var(--background-color);
+  padding: 3rem;
+
+  .title {
+    margin: 0 0 24px 0;
+    padding: 16px 0 16px 0;
+    text-align: center;
+    background-color: white;
+    border-bottom: 1px solid gray;
+  }
+
+  form {
+    margin-top: 0.5rem;
+    background-color: white;
+
+    .content {
+      padding: 16px;
+      
+      .row {
+        display: flex;
+        margin-bottom: 0.75rem;
+
+        .separator {
+          margin-right: 0.5rem;
+        }        
+      }
+
+      .actions {
+        display: flex;
+        justify-content: center;
+
+        .separator {
+          margin-right: 0.5rem;
+        }
+
+        .button-reset {
+          background-color: var(--background-color);
+        }
+      }
+  
+      .input {
+        width: 100%;
+        label {
+          margin: 0 0 4px 0;
+          display: block;
+        }
+  
+        .error {
+          margin: 4px 0 0 0;
+          color: red;
+          font-size: 12px;
+          height: 12px;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    padding: 1rem;
+    
+    form {
+      .content {
+        padding: 8px;
+        
+        .row {
+          display: unset;
+
+          .separator {
+            margin-right: unset;
+          }        
+        }
+      }
+    }    
+  }
+}

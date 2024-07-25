@@ -1,0 +1,47 @@
+<div class="form">
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <p class="title">Formulario de Registro</p>
+    <div class="content">
+      <div class="row">
+        <div class="input separator">
+          <label for="id">ID</label>
+          <input id="id" type="text" formControlName="id">
+          <p class="error">{{getErrorControl('id')}}</p>
+        </div>
+        <div class="input">
+          <label for="id">Nombre</label>
+          <input id="id" type="text" formControlName="name">
+          <p class="error">{{getErrorControl('name')}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input separator">
+          <label for="id">Descripción</label>
+          <input id="id" type="text" formControlName="description">
+          <p class="error">{{getErrorControl('description')}}</p>
+        </div>
+        <div class="input">
+          <label for="id">Logo</label>
+          <input id="id" type="text" formControlName="logo">
+          <p class="error">{{getErrorControl('logo')}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input separator">
+          <label for="id">Fecha Liberación</label>
+          <input id="id" type="date" formControlName="date_release">
+          <p class="error">{{getErrorControl('date_release')}}</p>
+        </div>
+        <div class="input">
+          <label for="id">Fecha Revisión</label>
+          <input id="id" type="date" formControlName="date_revision">
+          <p class="error">{{getErrorControl('date_revision')}}</p>
+        </div>
+      </div>
+      <div class="actions">
+        <button type="button" class="button-reset separator" (click)="reset()">Reiniciar</button>
+        <button [disabled]="!this.form.valid">Enviar</button>
+      </div>
+    </div>
+  </form>
+</div>
